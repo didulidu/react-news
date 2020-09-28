@@ -1,34 +1,52 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useIntl } from 'react-intl';
-import messages from './messages';
-import { LOGIN, REGISTER } from 'routes';
+import { useDispatch, useSelector } from 'react-redux';
+import { useInjectReducer } from 'utils/injectReducer';
+import { useInjectSaga } from 'utils/injectSaga';
+import { imageGet } from './actions';
+import saga from './saga';
+import reducer from './reducer';
+import { imageSelector } from './selector';
+import debounce from 'lodash.debounce';
+
+const key = 'image';
 
 function WelcomePage() {
-  const { formatMessage } = useIntl();
+  const [value, setValue] = useState('');
+  const dispatch = useDispatch();
+  useInjectSaga({ key, saga });
+  useInjectReducer({ key, reducer });
+
+  const image = useSelector(imageSelector());
+
+  const handleClick = () => {
+    dispatch(imageGet(value));
+  };
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+
+    //dispatch(imageGet(e.target.value));
+    debounceRequest(e.target.value);
+  };
+  const sendRequest = (value) => dispatch(imageGet(value));
+
+  const debounceRequest = useCallback(debounce(sendRequest, 500), [dispatch]);
 
   return (
     <div>
       <Helmet>
         <title>Welcome - React Boilerplate</title>
       </Helmet>
-      <div>
-        <Link to={LOGIN}>{formatMessage(messages.loginLink)}</Link>
-        <Link to={REGISTER}>{formatMessage(messages.registerLink)}</Link>
-      </div>
       <main>
-        <h1>{formatMessage(messages.heading)}</h1>
-        <h2>{formatMessage(messages.subheading)}</h2>
-        <p>
-          {formatMessage(messages.builtWithLove, {
-            team: (
-              <a key="team" href="https://www.vivifyideas.com/">
-                Vivify Ideas
-              </a>
-            )
-          })}
-        </p>
+        <input
+          type="text"
+          onChange={handleChange}
+          value={value}
+          placeholder="Type something"
+        />
+        {/* <button onClick={handleClick}>Click me!</button> */}
+        {image && <img src={image} alt="random image will be here" />}
       </main>
     </div>
   );

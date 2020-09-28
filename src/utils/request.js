@@ -3,7 +3,7 @@ import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import camelCase from 'lodash/camelCase';
 import mapKeys from 'lodash/mapKeys';
-
+import qs from 'qs';
 import config from 'config';
 import { setItem, removeItem } from 'utils/localStorage';
 import messages from 'messages';
@@ -13,15 +13,16 @@ import { makeSelectToken } from 'containers/App/selectors';
 import { enqueueSnackbar } from 'containers/Notifier/actions';
 
 const api = axios.create({
-  baseURL: config.api.baseUrl
+  baseURL: config.api.baseUrl,
+  paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 });
 
 api.interceptors.response.use(
-  response => mapKeys(response.data, (_, key) => camelCase(key)),
-  error => Promise.reject(error.response)
+  (response) => mapKeys(response.data, (_, key) => camelCase(key)),
+  (error) => Promise.reject(error.response)
 );
 
-export default function* request({ url, method, data, headers = {} }) {
+export default function* request({ url, method, data, params, headers = {} }) {
   try {
     let token = yield select(makeSelectToken());
 
@@ -33,19 +34,21 @@ export default function* request({ url, method, data, headers = {} }) {
       headers.Authorization = `Bearer ${token}`;
     }
 
-    return yield call(api, { method, url, headers, data });
+    return yield call(api, { method, url, headers, data, params });
   } catch (error) {
     if (error.status === 500) {
       yield call(removeItem, 'token');
       yield put(sessionExpired());
       yield put(
         enqueueSnackbar({
-          message: messages.sessionExpired
+          message: messages.sessionExpired,
         })
       );
     }
 
-    throw error;
+    if (error.status === 404) {
+      console.log(error);
+    }
   }
 }
 
@@ -54,8 +57,8 @@ export function* refreshToken(prevToken) {
     url: '/auth/refresh',
     method: 'post',
     headers: {
-      Authorization: `Bearer ${prevToken}`
-    }
+      Authorization: `Bearer ${prevToken}`,
+    },
   });
 
   yield call(setItem, 'token', token);

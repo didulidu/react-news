@@ -1,42 +1,30 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
-import { imageGet } from './actions';
+import { getTopNews } from './actions';
 import saga from './saga';
 import reducer from './reducer';
-import { imageSelector } from './selector';
-import debounce from 'lodash.debounce';
+import { articleSelector } from './selector';
+import { getItem } from 'utils/localStorage';
+import Thumbnail from 'components/Thumbnail';
 
-const key = 'image';
+const key = 'articles';
 
 function WelcomePage() {
-  const [value, setValue] = useState('');
   const dispatch = useDispatch();
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
-
-  const image = useSelector(imageSelector());
-
-  const handleClick = () => {
-    dispatch(imageGet(value));
-  };
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-
-    //dispatch(imageGet(e.target.value));
-    debounceRequest(e.target.value);
-  };
-  const sendRequest = (value) => dispatch(imageGet(value));
-
-  const debounceRequest = useCallback(debounce(sendRequest, 500), [dispatch]);
+  useEffect(() => {
+    dispatch(getTopNews({ country: getItem('country') || 'gb' }));
+  }, []);
+  const articles = useSelector(articleSelector());
 
   return (
     <div>
       <Helmet>
-        <title>Welcome - React Boilerplate</title>
+        <title>News</title>
       </Helmet>
       <main>
         <input
@@ -45,8 +33,9 @@ function WelcomePage() {
           value={value}
           placeholder="Type something"
         />
-        {/* <button onClick={handleClick}>Click me!</button> */}
-        {image && <img src={image} alt="random image will be here" />}
+        {articles.map((article) => (
+          <Thumbnail {...article} key={article.url} />
+        ))}
       </main>
     </div>
   );

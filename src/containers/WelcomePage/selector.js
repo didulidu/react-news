@@ -1,12 +1,12 @@
 const { createSelector } = require('reselect');
 const { initialState } = require('./reducer');
 
-const imageSel = (state) => state.image || initialState;
+const articleSel = (state) => state.articles || initialState;
 
-const imageSelector = () =>
-  createSelector(imageSel, (substate) => {
+const articleSelector = () =>
+  createSelector(articleSel, (substate) => {
     console.log(substate);
-    return substate.image;
+    return substate.articles;
   });
 
-export { imageSelector };
+export { articleSelector };

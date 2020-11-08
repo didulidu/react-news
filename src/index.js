@@ -11,6 +11,7 @@ import ErrorBoundry from 'containers/ErrorBoundary';
 import configureStore from 'configureStore';
 import * as serviceWorker from 'serviceWorker';
 import { translationMessages } from './i18n';
+import 'styles/main.scss';
 
 const initialState = {};
 const store = configureStore(initialState, history);

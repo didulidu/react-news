@@ -1,11 +1,11 @@
-import { IMAGE_GET, IMAGE_SET } from './constants';
+import { GET_TOP_NEWS, SET_TOP_NEWS } from './constants';
 
-export const imageGet = (payload) => ({
-  type: IMAGE_GET,
+export const getTopNews = (payload) => ({
+  type: GET_TOP_NEWS,
   payload,
 });
 
-export const imageSet = (payload) => ({
-  type: IMAGE_SET,
+export const setTopNews = (payload) => ({
+  type: SET_TOP_NEWS,
   payload,
 });

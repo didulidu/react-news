@@ -1,20 +1,21 @@
-import { IMAGE_SET } from './constants';
+import { SET_TOP_NEWS } from './constants';
 
 const { default: produce } = require('immer');
 
 export const initialState = {
-  image: null,
+  articles: [],
 };
 
-const imageReducer = (state = initialState, action) =>
+const newsReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
-      case IMAGE_SET:
-        draft.image = action.payload;
+      case SET_TOP_NEWS:
+        console.log(action.payload);
+        draft.articles = action.payload;
         break;
       default:
         break;
     }
   });
 
-export default imageReducer;
+export default newsReducer;

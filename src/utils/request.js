@@ -11,9 +11,12 @@ import messages from 'messages';
 import { setToken, sessionExpired } from 'containers/App/actions';
 import { makeSelectToken } from 'containers/App/selectors';
 import { enqueueSnackbar } from 'containers/Notifier/actions';
-
+console.log(config.api);
 const api = axios.create({
   baseURL: config.api.baseUrl,
+  headers: {
+    'x-api-key': config.api.apiKey,
+  },
   paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'repeat' }),
 });
 
@@ -30,8 +33,6 @@ export default function* request({ url, method, data, params, headers = {} }) {
       if (Date.now() / 1000 >= jwtDecode(token).exp) {
         token = yield call(refreshToken, token);
       }
-
-      headers.Authorization = `Bearer ${token}`;
     }
 
     return yield call(api, { method, url, headers, data, params });

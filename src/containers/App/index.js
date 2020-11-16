@@ -39,7 +39,7 @@ function App() {
           renderLoadingIndicator
         ) : (
           <>
-            {user && <AppBar onLogout={handleLogout} />}
+            {/* { <AppBar onLogout={handleLogout} />} */}
             <Routes />
           </>
         )}

@@ -25,6 +25,7 @@ if (config.sentry.key && config.sentry.project) {
 }
 
 const render = (messages) => {
+  console.log('daassda', messages);
   ReactDOM.render(
     <Provider store={store}>
       <LanguageProvider messages={messages}>

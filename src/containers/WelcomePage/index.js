@@ -9,6 +9,8 @@ import reducer from './reducer';
 import { articleSelector } from './selector';
 import { getItem } from 'utils/localStorage';
 import Thumbnail from 'components/Thumbnail';
+import ThumbnailList from 'ThumbnailList';
+import * as x from 'i18n';
 
 const key = 'articles';
 
@@ -19,6 +21,8 @@ function WelcomePage() {
   useEffect(() => {
     dispatch(getTopNews({ country: getItem('country') || 'gb' }));
   }, []);
+
+  console.log('QQQXW', x);
   const articles = useSelector(articleSelector());
 
   return (
@@ -27,15 +31,7 @@ function WelcomePage() {
         <title>News</title>
       </Helmet>
       <main>
-        <input
-          type="text"
-          onChange={handleChange}
-          value={value}
-          placeholder="Type something"
-        />
-        {articles.map((article) => (
-          <Thumbnail {...article} key={article.url} />
-        ))}
+        <ThumbnailList list={articles} />
       </main>
     </div>
   );

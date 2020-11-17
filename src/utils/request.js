@@ -6,11 +6,9 @@ import mapKeys from 'lodash/mapKeys';
 import qs from 'qs';
 import config from 'config';
 import { setItem, removeItem } from 'utils/localStorage';
-import messages from 'messages';
 
 import { setToken, sessionExpired } from 'containers/App/actions';
 import { makeSelectToken } from 'containers/App/selectors';
-import { enqueueSnackbar } from 'containers/Notifier/actions';
 console.log(config.api);
 const api = axios.create({
   baseURL: config.api.baseUrl,
@@ -40,11 +38,6 @@ export default function* request({ url, method, data, params, headers = {} }) {
     if (error.status === 500) {
       yield call(removeItem, 'token');
       yield put(sessionExpired());
-      yield put(
-        enqueueSnackbar({
-          message: messages.sessionExpired,
-        })
-      );
     }
 
     if (error.status === 404) {

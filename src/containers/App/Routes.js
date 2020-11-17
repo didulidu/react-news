@@ -8,6 +8,7 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import { WELCOME, DASHBOARD } from 'routes';
 
 export default function Routes() {
+  console.log('RUTER');
   return (
     <Switch>
       <PublicRoute exact path={WELCOME} component={WelcomePage} />

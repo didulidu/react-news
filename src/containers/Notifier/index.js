@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { withSnackbar } from 'notistack';
-import { useIntl } from 'react-intl';
 import { useInjectReducer } from 'utils/injectReducer';
 import { makeSelectNotifications } from './selectors';
 import { removeSnackbar } from './actions';
@@ -16,8 +15,6 @@ export function Notifier({ enqueueSnackbar, closeSnackbar }) {
 
   const dispatch = useDispatch();
   const notifications = useSelector(makeSelectNotifications());
-
-  const { formatMessage } = useIntl();
 
   useEffect(() => {
     if (!notifications.length) {
@@ -41,7 +38,7 @@ export function Notifier({ enqueueSnackbar, closeSnackbar }) {
             }
             dispatch(removeSnackbar(key));
           },
-          content: key => <div id={key}>{formatMessage(message)}</div>
+          content: (key) => <div id={key}>{message}</div>,
         });
 
         storeDisplayed(key);
@@ -49,7 +46,7 @@ export function Notifier({ enqueueSnackbar, closeSnackbar }) {
     });
   });
 
-  const storeDisplayed = id => {
+  const storeDisplayed = (id) => {
     displayed.current = [...displayed.current, id];
   };
 
@@ -58,7 +55,7 @@ export function Notifier({ enqueueSnackbar, closeSnackbar }) {
 
 Notifier.propTypes = {
   enqueueSnackbar: PropTypes.func,
-  closeSnackbar: PropTypes.func
+  closeSnackbar: PropTypes.func,
 };
 
 export default withSnackbar(Notifier);

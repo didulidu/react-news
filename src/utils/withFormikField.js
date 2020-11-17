@@ -1,5 +1,4 @@
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { ErrorMessage } from 'formik';
 
 export function withFormikField(Component) {
@@ -10,7 +9,7 @@ export function withFormikField(Component) {
       {...props}
       helperText={
         <ErrorMessage name={field.name}>
-          {message =>
+          {/* {message =>
             message.id ? (
               <FormattedMessage
                 {...message}
@@ -19,7 +18,7 @@ export function withFormikField(Component) {
             ) : (
               message
             )
-          }
+          } */}
         </ErrorMessage>
       }
     />

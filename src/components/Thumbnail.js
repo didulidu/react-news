@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Image from './shared/Image';
 
-const Thumbnail = ({ description, title, urlToImage, key }) => {
+const Thumbnail = ({ description, title, urlToImage }) => {
   return (
-    <React.Fragment key={key}>
+    <>
       <h4>{title}</h4>
       <Image src={urlToImage} alt={'No image found'} isLazyLoad />
       <p>{description}</p>
-    </React.Fragment>
+    </>
   );
 };
 

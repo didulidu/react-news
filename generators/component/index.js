@@ -54,16 +54,6 @@ module.exports = {
       }
     ];
 
-    // If the user wants i18n messages
-    if (data.wantMessages) {
-      actions.push({
-        type: 'add',
-        path: '../src/components/{{properCase name}}/messages.js',
-        templateFile: './component/messages.js.hbs',
-        abortOnFail: true
-      });
-    }
-
     // If component want tests
     if (data.wantTests) {
       actions.push({

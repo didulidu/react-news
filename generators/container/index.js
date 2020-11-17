@@ -67,16 +67,6 @@ module.exports = {
       }
     ];
 
-    // If component wants messages
-    if (data.wantMessages) {
-      actions.push({
-        type: 'add',
-        path: '../src/containers/{{properCase name}}/messages.js',
-        templateFile: './container/messages.js.hbs',
-        abortOnFail: true
-      });
-    }
-
     // If component wants tests
     if (data.wantTests) {
       actions.push({

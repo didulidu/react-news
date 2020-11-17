@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useDispatch, useSelector } from 'react-redux';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -8,13 +8,13 @@ import saga from './saga';
 import reducer from './reducer';
 import { articleSelector } from './selector';
 import { getItem } from 'utils/localStorage';
-import Thumbnail from 'components/Thumbnail';
 import ThumbnailList from 'ThumbnailList';
-import * as x from 'i18n';
+import { withTranslation } from 'react-i18next';
 
 const key = 'articles';
 
-function WelcomePage() {
+const WelcomePage = ({ t }) => {
+  console.log(t);
   const dispatch = useDispatch();
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
@@ -22,7 +22,6 @@ function WelcomePage() {
     dispatch(getTopNews({ country: getItem('country') || 'gb' }));
   }, []);
 
-  console.log('QQQXW', x);
   const articles = useSelector(articleSelector());
 
   return (
@@ -35,6 +34,6 @@ function WelcomePage() {
       </main>
     </div>
   );
-}
+};
 
-export default WelcomePage;
+export default withTranslation()(WelcomePage);

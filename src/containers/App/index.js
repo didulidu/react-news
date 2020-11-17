@@ -9,6 +9,7 @@ import { fetchAuthenticatedUser, logout } from './actions';
 import { makeSelectToken, makeSelectUser } from './selectors';
 import saga from './saga';
 import AppBar from 'components/AppBar';
+import { withTranslation } from 'react-i18next';
 
 const key = 'app';
 
@@ -28,7 +29,7 @@ function App() {
   }, [token, dispatch]);
 
   const renderLoadingIndicator = <div>Loading...</div>;
-
+  console.log('HEEEJ');
   return (
     <HelmetProvider>
       <SnackbarProvider>
@@ -39,7 +40,7 @@ function App() {
           renderLoadingIndicator
         ) : (
           <>
-            {/* { <AppBar onLogout={handleLogout} />} */}
+            {user && <AppBar onLogout={handleLogout} />}
             <Routes />
           </>
         )}

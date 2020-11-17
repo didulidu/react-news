@@ -4,9 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 {{#if wantHeaders}}
 import { Helmet } from 'react-helmet-async';
 {{/if}}
-{{#if wantMessages}}
-import { useIntl } from 'react-intl';
-{{/if}}
 {{#if wantActionsAndReducer}}
 import { useInjectReducer } from 'utils/injectReducer';
 {{/if}}
@@ -20,9 +17,6 @@ import reducer from './reducer';
 {{/if}}
 {{#if wantSaga}}
 import saga from './saga';
-{{/if}}
-{{#if wantMessages}}
-import messages from './messages';
 {{/if}}
 
 {{#if wantActionsAndReducer}}
@@ -44,9 +38,6 @@ function {{ properCase name }}() {
   const {{ camelCase name }} = useSelector(makeSelect{{properCase name}}());
   {{/if}}
 
-  {{#if wantMessages}}
-  const { formatMessage } = useIntl();
-  {{/if}}
 
   return (
     <div>
@@ -55,9 +46,6 @@ function {{ properCase name }}() {
         <title>{{properCase name}}</title>
         <meta name="description" content="Description of {{properCase name}}" />
       </Helmet>
-    {{/if}}
-    {{#if wantMessages}}
-      <h1>{formatMessage(messages.header)}</h1>
     {{/if}}
     </div>
   );

@@ -14,7 +14,6 @@ import { withTranslation } from 'react-i18next';
 const key = 'articles';
 
 const WelcomePage = ({ t }) => {
-  console.log(t);
   const dispatch = useDispatch();
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
@@ -23,11 +22,11 @@ const WelcomePage = ({ t }) => {
   }, []);
 
   const articles = useSelector(articleSelector());
-
+  console.log('ttt', t);
   return (
     <div>
       <Helmet>
-        <title>News</title>
+        <title>{t('title')}</title>
       </Helmet>
       <main>
         <ThumbnailList list={articles} />

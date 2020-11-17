@@ -2,17 +2,17 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import PrivateRoute from 'containers/PrivateRoute';
 import PublicRoute from 'containers/PublicRoute';
-import WelcomePage from 'containers/WelcomePage/Loadable';
+import TopNews from 'containers/TopNews/Loadable';
 import Dashboard from 'containers/Dashboard/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import { WELCOME, DASHBOARD } from 'routes';
+import { TOP_NEWS, CATEGORIES } from 'routes';
 
 export default function Routes() {
-  console.log('RUTER');
   return (
     <Switch>
-      <PublicRoute exact path={WELCOME} component={WelcomePage} />
-      <PrivateRoute exact path={DASHBOARD} component={Dashboard} />
+      <PublicRoute exact path={TOP_NEWS} component={TopNews} />
+      {/* <PublicRoute exact path={CATEGORIES} component={Dashboard} /> */}
+
       {/* <PublicRoute
         exact
         path={FORGOT_PASSWORD}

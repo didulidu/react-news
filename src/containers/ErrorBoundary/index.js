@@ -28,7 +28,7 @@ export class ErrorBoundry extends Component {
       // render fallback UI
       console.log('Erorcina', this.showReportDialog);
       if (this.props.fallbackUI) {
-        return this.props.fallbackUI(this.showReportDialog);
+        return this.props.fallbackUI(this.showReportDialog());
       }
 
       return (

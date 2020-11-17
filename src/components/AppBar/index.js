@@ -1,20 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { DASHBOARD } from 'routes';
+import { TOP_NEWS, CATEGORIES, SEARCH } from 'routes';
+import { withTranslation } from 'react-i18next';
+import LanguagePicker from 'components/Language';
+import TopNewsCountriesList from 'components/TopNewsCountriesList';
 
-function AppBar({ onLogout }) {
+const AppBar = ({ t }) => {
   return (
-    <div>
-      <Link to={DASHBOARD}>Vivify Ideas</Link>
-      {/* <Link to={'USER_PROFILE'}>{formatMessage(messages.profileLink)}</Link> */}
-      {/* <span onClick={onLogout}>{formatMessage(messages.logoutLink)}</span> */}
-    </div>
+    <header>
+      <Link to={TOP_NEWS}>{t('topNews')}</Link>
+      <Link to={CATEGORIES}>{t('categories')}</Link>
+      <Link to={SEARCH}>{t('search')}</Link>
+      <span className="bar-right">
+        <LanguagePicker />
+        <TopNewsCountriesList />
+      </span>
+    </header>
   );
-}
-
-AppBar.propTypes = {
-  onLogout: PropTypes.func.isRequired,
 };
 
-export default AppBar;
+AppBar.propTypes = {
+  t: PropTypes.func,
+};
+
+export default withTranslation('app-bar')(AppBar);

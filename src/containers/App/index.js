@@ -20,7 +20,6 @@ function App() {
 
   const token = useSelector(makeSelectToken());
   const user = useSelector(makeSelectUser());
-  const handleLogout = useCallback(() => dispatch(logout()), [dispatch]);
 
   useEffect(() => {
     if (token) {
@@ -29,7 +28,6 @@ function App() {
   }, [token, dispatch]);
 
   const renderLoadingIndicator = <div>Loading...</div>;
-  console.log('HEEEJ');
   return (
     <HelmetProvider>
       <SnackbarProvider>
@@ -40,7 +38,7 @@ function App() {
           renderLoadingIndicator
         ) : (
           <>
-            {user && <AppBar onLogout={handleLogout} />}
+            <AppBar />
             <Routes />
           </>
         )}

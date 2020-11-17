@@ -6,23 +6,24 @@ import { useInjectSaga } from 'utils/injectSaga';
 import { getTopNews } from './actions';
 import saga from './saga';
 import reducer from './reducer';
-import { articleSelector } from './selector';
+import { articleSelector, countrySelector } from './selectors';
 import { getItem } from 'utils/localStorage';
 import ThumbnailList from 'ThumbnailList';
 import { withTranslation } from 'react-i18next';
 
 const key = 'articles';
 
-const WelcomePage = ({ t }) => {
+const TopNews = ({ t }) => {
   const dispatch = useDispatch();
   useInjectSaga({ key, saga });
   useInjectReducer({ key, reducer });
+  const selectedCountry = useSelector(countrySelector());
+  const articles = useSelector(articleSelector());
+
   useEffect(() => {
-    dispatch(getTopNews({ country: getItem('country') || 'gb' }));
+    dispatch(getTopNews({ country: selectedCountry }));
   }, []);
 
-  const articles = useSelector(articleSelector());
-  console.log('ttt', t);
   return (
     <div>
       <Helmet>
@@ -35,4 +36,4 @@ const WelcomePage = ({ t }) => {
   );
 };
 
-export default withTranslation()(WelcomePage);
+export default withTranslation('home')(TopNews);

@@ -5,8 +5,12 @@ const articleSel = (state) => state.articles || initialState;
 
 const articleSelector = () =>
   createSelector(articleSel, (substate) => {
-    console.log(substate);
     return substate.articles;
   });
 
-export { articleSelector };
+const countrySelector = () =>
+  createSelector(articleSel, (substate) => {
+    return substate.country;
+  });
+
+export { articleSelector, countrySelector };

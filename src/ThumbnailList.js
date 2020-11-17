@@ -11,4 +11,4 @@ const ThumbnailList = ({ list, t }) => (
   </>
 );
 
-export default withTranslation()(ThumbnailList);
+export default withTranslation('home')(ThumbnailList);

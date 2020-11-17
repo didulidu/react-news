@@ -11,7 +11,7 @@ function* handleGetTopNews({ payload }) {
       params: payload,
     });
 
-    yield put(setTopNews(articles));
+    yield put(setTopNews({ articles, country: payload.country }));
   } catch (e) {
     console.log(e);
   }

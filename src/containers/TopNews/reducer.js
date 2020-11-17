@@ -4,14 +4,15 @@ const { default: produce } = require('immer');
 
 export const initialState = {
   articles: [],
+  country: 'GB',
 };
 
 const newsReducer = (state = initialState, action) =>
   produce(state, (draft) => {
     switch (action.type) {
       case SET_TOP_NEWS:
-        console.log(action.payload);
-        draft.articles = action.payload;
+        draft.articles = action.payload.articles;
+        draft.country = action.payload.country;
         break;
       default:
         break;

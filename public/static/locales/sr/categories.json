@@ -1,0 +1,11 @@
+{
+    "topXNews": "Top {{pageSize}} vesti iz {{country}}",
+    "business": "Biznis",
+    "entertainment": "Zabava",
+    "general": "Opste",
+    "health": "Zdravlje",
+    "science": "Nauka",
+    "sports": "Sport",
+    "technology": "Tehnologija",
+    "topCategoryFrom": "Top {{category}} news from {{country}}"
+}

@@ -1,0 +1,5 @@
+export const GET_CATEGORY_NEWS = 'GET_CATEGORY_NEWS';
+export const SET_CATEGORY_NEWS = 'SET_CATEGORY_NEWS';
+export const SET_CATEGORY = 'SET_CATEGORY';
+export const GET_CATEGORY = 'GET_CATEGORY';
+export const SET_PAGE_SIZE = 'SET_PAGE_SIZE';

@@ -1,26 +1,26 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { DEFAULT_TOP_NEWS_COUNTRIES } from './constants';
 import classNames from 'classnames';
 import reducer from 'containers/TopNews/reducer';
+import saga from 'containers/TopNews/saga';
 import { useDispatch, useSelector } from 'react-redux';
-import { useInjectReducer } from 'utils/injectReducer';
-import { getTopNews } from 'containers/TopNews/actions';
+import { setCountry } from 'containers/TopNews/actions';
 import { countrySelector } from 'containers/TopNews/selectors';
-const key = 'country';
+import { useInjectReducer } from 'utils/injectReducer';
+const key = 'articles';
 
-const TopNewsCountriesList = ({ countries }) => {
+const TopNewsCountriesList = ({ countries, disabled, getNewsAction }) => {
   const dispatch = useDispatch();
   useInjectReducer({ key, reducer });
-
   const selectedCountry = useSelector(countrySelector());
 
   const isSelected = (country) => {
     return selectedCountry === country;
   };
-
   const handleClick = ({ target }) => {
-    dispatch(getTopNews({ country: target.value }));
+    dispatch(setCountry(target.value));
+    dispatch(getNewsAction());
   };
 
   return (
@@ -28,6 +28,7 @@ const TopNewsCountriesList = ({ countries }) => {
       {countries.map((country) => (
         <span key={country}>
           <button
+            disabled={disabled}
             className={classNames({
               'top-news-button': true,
               selected: isSelected(country),

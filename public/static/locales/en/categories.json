@@ -1,0 +1,11 @@
+{
+    "topXNews": "Top {{pageSize}} news from {{country}}",
+    "business": "Business",
+    "entertainment": "Entertainment",
+    "general": "General",
+    "health": "Health",
+    "science": "Science",
+    "sports": "Sports",
+    "technology": "Technology",
+    "topCategoryFrom": "Top {{category}} news from {{country}}"
+}

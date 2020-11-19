@@ -9,7 +9,6 @@ import { setItem, removeItem } from 'utils/localStorage';
 
 import { setToken, sessionExpired } from 'containers/App/actions';
 import { makeSelectToken } from 'containers/App/selectors';
-console.log(config.api);
 const api = axios.create({
   baseURL: config.api.baseUrl,
   headers: {

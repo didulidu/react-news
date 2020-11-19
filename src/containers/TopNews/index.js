@@ -7,8 +7,7 @@ import { getTopNews } from './actions';
 import saga from './saga';
 import reducer from './reducer';
 import { articleSelector, countrySelector } from './selectors';
-import { getItem } from 'utils/localStorage';
-import ThumbnailList from 'ThumbnailList';
+import ThumbnailList from 'components/Thumbnails/ThumbnailList';
 import { withTranslation } from 'react-i18next';
 
 const key = 'articles';

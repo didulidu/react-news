@@ -1,3 +1,4 @@
+import { resetPagination } from 'components/Thumbnails/actions';
 import ThumbnailList from 'components/Thumbnails/ThumbnailList';
 import { getCategoryNews, setCategory } from 'containers/Categories/actions';
 import {
@@ -30,12 +31,15 @@ const SingleCategory = (props) => {
   useEffect(() => {
     dispatch(setCategory(params.id));
     dispatch(getCategoryNews({ pageSize: 20 }));
+    return () => {
+      dispatch(resetPagination());
+    };
   }, []);
 
   return (
     <>
       <h1>{t('topCategoryFrom', { category, country })}</h1>
-      <ThumbnailList list={articles} />
+      <ThumbnailList getNews={getCategoryNews} list={articles} />
     </>
   );
 };

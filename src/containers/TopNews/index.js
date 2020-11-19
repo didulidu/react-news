@@ -9,6 +9,7 @@ import reducer from './reducer';
 import { articleSelector, countrySelector } from './selectors';
 import ThumbnailList from 'components/Thumbnails/ThumbnailList';
 import { withTranslation } from 'react-i18next';
+import { resetPagination } from 'components/Thumbnails/actions';
 
 const key = 'articles';
 
@@ -20,7 +21,10 @@ const TopNews = ({ t }) => {
   const articles = useSelector(articleSelector());
 
   useEffect(() => {
-    dispatch(getTopNews({ country: selectedCountry }));
+    dispatch(getTopNews());
+    return () => {
+      dispatch(resetPagination());
+    };
   }, []);
 
   return (
@@ -29,7 +33,7 @@ const TopNews = ({ t }) => {
         <title>{t('title')}</title>
       </Helmet>
       <main>
-        <ThumbnailList list={articles} />
+        <ThumbnailList getNews={getTopNews} list={articles} />
       </main>
     </div>
   );

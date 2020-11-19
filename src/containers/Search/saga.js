@@ -1,3 +1,5 @@
+import { setCount } from 'components/Thumbnails/actions';
+import { currentPageSelector } from 'components/Thumbnails/selectors';
 import { countrySelector } from 'containers/TopNews/selectors';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
@@ -9,12 +11,14 @@ function* handleSearchNews() {
   try {
     const country = yield select(countrySelector());
     const q = yield select(valueSelector());
-    const { articles } = yield call(request, {
+    const page = yield select(currentPageSelector());
+    const { articles, totalResults } = yield call(request, {
       method: 'get',
       url: `/top-headlines`,
-      params: { q, country },
+      params: { q, country, page },
     });
     yield put(searchedNewsSet(articles));
+    yield put(setCount(totalResults));
   } catch (e) {
     console.log(e);
   }

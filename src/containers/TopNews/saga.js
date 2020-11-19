@@ -1,22 +1,25 @@
 import { setLoader } from 'components/shared/Loader/action';
+import { setCount } from 'components/Thumbnails/actions';
+import { currentPageSelector } from 'components/Thumbnails/selectors';
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import request from 'utils/request';
 import { setTopNews } from './actions';
 import { GET_TOP_NEWS } from './constants';
 import { countrySelector } from './selectors';
 
-function* handleGetTopNews({ payload }) {
+function* handleGetTopNews() {
   try {
     const country = yield select(countrySelector());
+    const page = yield select(currentPageSelector());
 
     yield put(setLoader(true));
-    const { articles } = yield call(request, {
+    const { articles, totalResults } = yield call(request, {
       method: 'get',
       url: `top-headlines`,
-      params: { ...payload, country },
+      params: { country, page },
     });
-
     yield put(setTopNews({ articles }));
+    yield put(setCount(totalResults));
   } catch (e) {
     console.log(e);
   } finally {

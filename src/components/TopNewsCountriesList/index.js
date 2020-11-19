@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCountry } from 'containers/TopNews/actions';
 import { countrySelector } from 'containers/TopNews/selectors';
 import { useInjectReducer } from 'utils/injectReducer';
+import { resetPagination } from 'components/Thumbnails/actions';
 const key = 'articles';
 
 const TopNewsCountriesList = ({ countries, disabled, getNewsAction }) => {
@@ -19,6 +20,7 @@ const TopNewsCountriesList = ({ countries, disabled, getNewsAction }) => {
     return selectedCountry === country;
   };
   const handleClick = ({ target }) => {
+    dispatch(resetPagination());
     dispatch(setCountry(target.value));
     dispatch(getNewsAction());
   };
